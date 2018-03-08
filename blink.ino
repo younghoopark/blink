@@ -1,0 +1,16 @@
+#include "Arduino.h"
+#include "Blink.h"
+
+Blink blink(D4);
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(115200);
+  Serial.println("\nBlink Version 1.0 YoungHoo Park");
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  blink.on();
+  blink.off();
+}
