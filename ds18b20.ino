@@ -1,3 +1,12 @@
+//const char* host = "api.thingspeak.com";
+//String url = "/update?api_key=KFSEU2UP2TMR44PP";  
+const char* host = "maker.ifttt.com";
+String url = "/trigger/hot_temp/with/key/JZpA8zhMzxr-7Bcm-yumz";
+const int httpPort = 80;
+int interval = 5000;
+float r = 0;
+
+#include <ESP8266WiFi.h>
 #include <WiFiClientSecure.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
@@ -78,3 +87,4 @@ void loop() {
      delivering(payload);
   }
 }
+
