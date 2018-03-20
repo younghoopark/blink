@@ -1,35 +1,28 @@
-const char* host = "api.thingspeak.com";
-String url = "/update?api_key=KFSEU2UP2TMR44PP";  
-const int httpPort = 80;
-int interval = 60000;
-float r = 0;
-
-#include <ESP8266WiFi.h>
 #include <WiFiClientSecure.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
-#define ONE_WIRE_BUS D3
-
-
+#define ONE_WIRE_BUS D3 
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 
-
-
-const char* ssid = "t-broad52F5";
-const char* password = "D1630B52F4";
+//const char* ssid = "t-broad52F5";
+//const char* password = "D1630B52F4";
+const char* ssid = "iPhone";
+const char* password = "3wa580g33fyu6";
 
 String working() { 
   Serial.print("Requesting temperatures...");
   sensors.requestTemperatures();  // Send the command to get temperatures
   Serial.println("DONE");
   Serial.print("Temperature for Device 1 is: ");
-  
+
   r = sensors.getTempCByIndex(0);
   Serial.print(sensors.getTempCByIndex(0));
+  url = "/trigger/hot_temp/with/key/JZpA8zhMzxr-7Bcm-yumz/?value1="+String(r);
   return(String("field1=")+String(r));
 }
+
 
 void delivering(String payload) { 
   WiFiClient client;
@@ -40,6 +33,7 @@ void delivering(String payload) {
     Serial.println(payload);
     return;
   }
+
   String getheader = "GET "+ String(url) +"&"+ String(payload) +" HTTP/1.1";
   client.println(getheader);
   client.println("User-Agent: ESP8266 YoungHoo Park");  
@@ -64,16 +58,15 @@ void connect_ap() {
     delay(500);
     Serial.print(".");
   }
+
   Serial.print("\n Got WiFi, IP address: ");
   Serial.println(WiFi.localIP());  
 }
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(5000);
   Serial.println("Dallas Temperature IC Control Library Demo");   //////plus code
-
   sensors.begin(); ///////////////// plus code
-  
   connect_ap();
 }
 
